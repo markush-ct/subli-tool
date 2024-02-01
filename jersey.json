@@ -1,0 +1,56 @@
+{
+    "size_allowance": {
+        "width": 2.3,
+        "height": 3
+    },
+    "layers": {
+        "num front": "no",
+        "num back": "no",
+        "surname": "surname",
+        "label front": "jersey#no#surname",
+        "label back": "jersey#no#surname",
+        "sample": "sample"
+    },
+    "sizes": {
+        "2xs": {
+            "width": 38,
+            "height": 27
+        },
+        "xs": {
+            "width": 40,
+            "height": 28
+        },
+        "s": {
+            "width": 42,
+            "height": 29
+        },
+        "m": {
+            "width": 44,
+            "height": 30
+        },
+        "l": {
+            "width": 46,
+            "height": 31
+        },
+        "xl": {
+            "width": 48,
+            "height": 32
+        },
+        "2xl": {
+            "width": 50,
+            "height": 33
+        },
+        "3xl": {
+            "width": 52,
+            "height": 34
+        },
+        "4xl": {
+            "width": 54,
+            "height": 35
+        },
+        "5xl": {
+            "width": 56,
+            "height": 35
+        }
+    }
+}
