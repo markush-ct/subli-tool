@@ -3,9 +3,9 @@ import csv
 import win32com.client
 
 
-class JerseyAutomation:
+class SubliTool:
 
-    def __init__(self, lineup='lineup.csv', destination='export', config='jersey'):
+    def __init__(self, lineup='lineup.csv', destination='D:\\Programming Workspace\\Python Projects\\subli-tool\\export', config='jersey'):
         # Photoshop
         self.ps_app = win32com.client.Dispatch("Photoshop.Application")
         self.current_doc = self.ps_app.ActiveDocument
@@ -17,8 +17,8 @@ class JerseyAutomation:
 
         # Config files
         self.configs = {
-            'jersey': 'jersey.json',
-            'short': 'short.json'
+            'jersey': 'config/jersey.json',
+            'short': 'config/short.json'
         }
 
     def parse_json(self, json_file):
@@ -87,11 +87,16 @@ class JerseyAutomation:
         config = self.parse_json(self.configs['jersey'])
         config_layer_names = list(config['layers'].keys())
         config_layers = config['layers']
-        config_columns = self.clean_columns(list(config['layers'].values()))
+        config_columns = list(config['layers'].values())
+        config_sizes = config['sizes']
         config_size_allowance = config['size_allowance']
 
         lineup = self.parse_csv(self.csv_lineup)
         lineup_headers = list(self.parse_csv(self.csv_lineup)[0].keys())
+
+        config_columns.append(config['size_column'])
+        config_columns.append(config['file_naming'])
+        config_columns = self.clean_columns(config_columns)
 
         if self.check_layers(config_layer_names):
             result = all(
@@ -99,6 +104,9 @@ class JerseyAutomation:
 
             if result:
                 for row in range(len(lineup)):
+                    file_format = config['file_naming'].split('#')
+                    file_name = ''
+
                     for key, val in config_layers.items():
                         column = val.split('#')
                         data = ''
@@ -112,13 +120,25 @@ class JerseyAutomation:
                         layer = self.current_doc.ArtLayers[key]
                         layer.TextItem.Contents = data.upper().strip()
 
-                        # TODO Resize jersey here and save to TIFF
+                    for item in file_format:
+                        file_name += f"{lineup[row][item]} "
+
+                    size = lineup[row][config['size_column']].lower()
+                    width = config_sizes[size]['width'] + \
+                        config_size_allowance['width']
+                    height = config_sizes[size]['height'] + \
+                        config_size_allowance['height']
+
+                    self.resize_jersey(width, height)
+                    self.save_to_tiff(file_name.strip().upper())
+
+                return "Automation process successful!"
             else:
-                print("Config columns should be match to Lineup headers!")
+                return "Columns in configuration file doesn't match to lineup headers"
         else:
-            print(self.check_layers(config_layer_names))
+            return self.check_layers(config_layer_names)
 
 
 if __name__ == '__main__':
-    jersey_automation = JerseyAutomation()
-    jersey_automation.run()
+    subli_tool = SubliTool()
+    print(subli_tool.run())

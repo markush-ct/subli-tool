@@ -1,15 +1,16 @@
 {
+    "size_column": "jersey",
     "size_allowance": {
         "width": 2.3,
         "height": 3
     },
+    "file_naming": "jersey#no#surname",
     "layers": {
         "num front": "no",
         "num back": "no",
         "surname": "surname",
         "label front": "jersey#no#surname",
-        "label back": "jersey#no#surname",
-        "sample": "sample"
+        "label back": "jersey#no#surname"
     },
     "sizes": {
         "2xs": {
