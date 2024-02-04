@@ -5,7 +5,7 @@ import win32com.client
 
 class SubliTool:
 
-    def __init__(self, lineup='lineup.csv', destination='D:\\Programming Workspace\\Python Projects\\subli-tool\\export', config='jersey'):
+    def __init__(self, lineup='lineup.csv', destination="D:/Programming Workspace/Python Projects/subli-tool/export", config='jersey'):
         # Photoshop
         self.ps_app = win32com.client.Dispatch("Photoshop.Application")
         self.current_doc = self.ps_app.ActiveDocument
@@ -67,7 +67,7 @@ class SubliTool:
             return f'Layers count missing: {missing}'
 
     def save_to_tiff(self, filename):
-        tiff_filename = f"{self.destination_folder}\\{filename}.tiff"
+        tiff_filename = f"{self.destination_folder}/{filename}.tiff"
         tiff_save_options = win32com.client.Dispatch(
             "Photoshop.TiffSaveOptions")
         tiff_save_options.ImageCompression = 3
